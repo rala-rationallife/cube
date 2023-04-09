@@ -1,3 +1,4 @@
+import { Hero } from "@/components/hero"
 import { Meta } from "@/components/meta"
 
 export default function About() {
@@ -5,7 +6,7 @@ export default function About() {
     <>
       <Meta pageTitle="About" pageDesc="Aboutページ" />
 
-      <h1>ABOUT</h1>
+      <Hero title="About" subTitle="About development activities" />
     </>
   )
 }
