@@ -1,0 +1,24 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+
+  h2:not(:first-child),
+  h3:not(:first-child) {
+    margin-top: calc(-1.5em + 2em);
+  }
+
+  h2 + *,
+  h3 + * {
+    margin-top: calc(-1.5em + 0.8em);
+  }
+
+  p {
+    line-height: 1.8;
+  }
+
+  ul {
+    padding: revert;
+    list-style: revert;
+  }
+}
