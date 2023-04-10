@@ -1,0 +1,25 @@
+.spaceBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sideBySide {
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.sideBySideCenter {
+  composes: sideBySide;
+  align-items: center;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    text-align: left;
+  }
+}

@@ -5,8 +5,10 @@ import { Nav } from "./nav"
 export function Header() {
   return (
     <header>
-      <Logo boxOn />
-      <Nav />
+      <div className={styles.flexContainer}>
+        <Logo boxOn />
+        <Nav />
+      </div>
     </header>
   )
 }

@@ -3,8 +3,11 @@ import { Logo } from "./logo"
 
 export function Footer() {
   return (
-    <footer>
-      <Logo />
+    <footer className={styles.wrapper}>
+      <div className={styles.flexContainer}>
+        <Logo />
+        [ソーシャル]
+      </div>
     </footer>
   )
 }
