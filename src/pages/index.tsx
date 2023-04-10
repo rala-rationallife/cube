@@ -1,3 +1,4 @@
+import { Container } from "@/components/container"
 import { Hero } from "@/components/hero"
 import { Meta } from "@/components/meta"
 import { siteMeta } from "@/lib/constants"
@@ -9,7 +10,9 @@ export default function Home() {
     <>
       <Meta />
 
-      <Hero title={siteTitle} subTitle={siteDesc} imageOn />
+      <Container>
+        <Hero title={siteTitle} subTitle={siteDesc} imageOn />
+      </Container>
     </>
   )
 }
