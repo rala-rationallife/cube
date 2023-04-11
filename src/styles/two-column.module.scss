@@ -19,7 +19,7 @@
       text-align: right;
     }
 
-    &:is(div, ul) {
+    :is(div, ul) {
       width: fit-content;
       margin-left: auto;
       place-items: flex-end;
