@@ -1,6 +1,5 @@
 .stack {
-  display: flex;
-  flex-direction: column;
+  composes: flexColumn from "@/styles/utils.module.scss";
   gap: 1.5em;
 
   h2:not(:first-child),

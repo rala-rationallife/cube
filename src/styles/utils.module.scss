@@ -23,3 +23,8 @@
     text-align: left;
   }
 }
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}

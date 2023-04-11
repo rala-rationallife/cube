@@ -1,0 +1,8 @@
+.stack {
+  composes: flexColumn from "@/styles/utils.module.scss";
+  gap: 1em;
+}
+
+.heading {
+  font-size: var(--body);
+}
