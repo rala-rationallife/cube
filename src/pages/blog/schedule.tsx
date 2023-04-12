@@ -2,6 +2,7 @@ import { Contact } from "@/components/contact"
 import { Container } from "@/components/container"
 import { ConvertBody } from "@/components/convert-body"
 import { PostBody } from "@/components/post-body"
+import { PostCategories } from "@/components/post-categories"
 import { PostHeader } from "@/components/post-header"
 import {
   TwoColumn,
@@ -46,7 +47,7 @@ export default function Schedule({
             </PostBody>
           </TwoColumnMain>
           <TwoColumnSidebar>
-            <Contact />
+            <PostCategories categories={categories} />
           </TwoColumnSidebar>
         </TwoColumn>
       </article>
