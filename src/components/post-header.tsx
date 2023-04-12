@@ -1,6 +1,7 @@
 import styles from "@/styles/post-header.module.scss"
 import { faClock } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { ConvertDate } from "./convert-date"
 
 type Props = {
   title: string
@@ -16,7 +17,7 @@ export function PostHeader({ title, subTitle, publishDate }: Props) {
       {publishDate && (
         <div className={styles.publishDate}>
           <FontAwesomeIcon icon={faClock} size="lg" color="var(--gray-25)" />
-          {publishDate}
+          <ConvertDate dateISO={publishDate} />
         </div>
       )}
     </div>
