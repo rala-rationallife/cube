@@ -18,6 +18,7 @@ export type Post = {
     name: string
     slug: string
   }[]
+  description: string
 }
 
 export const client = createClient({
@@ -45,6 +46,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
         height: 0,
       },
       categories: [],
+      description: "",
     }
   }
 }

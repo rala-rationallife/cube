@@ -1,6 +1,6 @@
-import { Contact } from "@/components/contact"
 import { Container } from "@/components/container"
 import { ConvertBody } from "@/components/convert-body"
+import { Meta } from "@/components/meta"
 import { PostBody } from "@/components/post-body"
 import { PostCategories } from "@/components/post-categories"
 import { PostHeader } from "@/components/post-header"
@@ -10,6 +10,7 @@ import {
   TwoColumnSidebar,
 } from "@/components/two-column"
 import { Post, getPostBySlug } from "@/lib/api"
+import { extractText } from "@/lib/extract-text"
 import Image from "next/image"
 
 export default function Schedule({
@@ -18,40 +19,51 @@ export default function Schedule({
   content,
   eyecatch,
   categories,
+  description,
 }: Post) {
   return (
-    <Container>
-      <article>
-        <PostHeader
-          title={title}
-          subTitle="Blog Article"
-          publishDate={publishDate}
-        />
+    <>
+      <Meta
+        pageTitle={title}
+        pageDesc={description}
+        pageImg={eyecatch.url}
+        pageImgW={eyecatch.width.toString()}
+        pageImgH={eyecatch.height.toString()}
+      />
 
-        <figure>
-          <Image
-            src={eyecatch.url}
-            alt=""
-            width={eyecatch.width}
-            height={eyecatch.height}
-            sizes="(min-width: 1166px) 1166px, 100vw"
-            style={{ width: "100%", height: "auto" }}
-            priority
+      <Container>
+        <article>
+          <PostHeader
+            title={title}
+            subTitle="Blog Article"
+            publishDate={publishDate}
           />
-        </figure>
 
-        <TwoColumn>
-          <TwoColumnMain>
-            <PostBody>
-              <ConvertBody contentHTML={content} />
-            </PostBody>
-          </TwoColumnMain>
-          <TwoColumnSidebar>
-            <PostCategories categories={categories} />
-          </TwoColumnSidebar>
-        </TwoColumn>
-      </article>
-    </Container>
+          <figure>
+            <Image
+              src={eyecatch.url}
+              alt=""
+              width={eyecatch.width}
+              height={eyecatch.height}
+              sizes="(min-width: 1166px) 1166px, 100vw"
+              style={{ width: "100%", height: "auto" }}
+              priority
+            />
+          </figure>
+
+          <TwoColumn>
+            <TwoColumnMain>
+              <PostBody>
+                <ConvertBody contentHTML={content} />
+              </PostBody>
+            </TwoColumnMain>
+            <TwoColumnSidebar>
+              <PostCategories categories={categories} />
+            </TwoColumnSidebar>
+          </TwoColumn>
+        </article>
+      </Container>
+    </>
   )
 }
 
@@ -77,13 +89,16 @@ export async function getStaticProps(): Promise<{ props: Post }> {
         content: "",
         eyecatch: {
           url: "",
-          width: 1280,
-          height: 960,
+          width: 0,
+          height: 0,
         },
         categories: [],
+        description: "",
       },
     }
   }
+
+  const description = extractText(post.content)
 
   return {
     props: {
@@ -92,6 +107,7 @@ export async function getStaticProps(): Promise<{ props: Post }> {
       content: post.content,
       eyecatch: post.eyecatch,
       categories: post.categories,
+      description,
     },
   }
 }
