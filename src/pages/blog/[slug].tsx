@@ -12,10 +12,11 @@ import {
 import { Post, getPostBySlug } from "@/lib/api"
 import { eyecatchLocal } from "@/lib/constants"
 import { extractText } from "@/lib/extract-text"
+import { GetStaticPropsContext } from "next"
 import Image from "next/image"
 import { getPlaiceholder } from "plaiceholder"
 
-export default function Schedule({
+export default function Post({
   title,
   publishDate,
   content,
@@ -71,7 +72,16 @@ export default function Schedule({
   )
 }
 
-export async function getStaticProps(): Promise<{ props: Post }> {
+export async function getStaticPaths() {
+  return {
+    paths: ["/blog/schedule", "/blog/music", "/blog/micro"],
+    fallback: false,
+  }
+}
+
+export async function getStaticProps(
+  context: GetStaticPropsContext,
+): Promise<{ props: Post }> {
   // resPromise.then((res) => console.log(res)).catch((err) => console.log(err))
 
   // try {
@@ -81,7 +91,15 @@ export async function getStaticProps(): Promise<{ props: Post }> {
   //   console.log(err)
   // }
 
-  const slug = "micro"
+  if (!context.params) {
+    throw new Error("Missing context parameters.")
+  }
+
+  const slug = context.params.slug
+
+  if (typeof slug !== "string") {
+    throw new Error("Slug must be a string.")
+  }
 
   const post = await getPostBySlug(slug)
 
