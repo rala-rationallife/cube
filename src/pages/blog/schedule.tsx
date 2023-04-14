@@ -10,8 +10,10 @@ import {
   TwoColumnSidebar,
 } from "@/components/two-column"
 import { Post, getPostBySlug } from "@/lib/api"
+import { eyecatchLocal } from "@/lib/constants"
 import { extractText } from "@/lib/extract-text"
 import Image from "next/image"
+import { getPlaiceholder } from "plaiceholder"
 
 export default function Schedule({
   title,
@@ -48,6 +50,8 @@ export default function Schedule({
               sizes="(min-width: 1166px) 1166px, 100vw"
               style={{ width: "100%", height: "auto" }}
               priority
+              placeholder="blur"
+              blurDataURL={eyecatch.blurDataURL}
             />
           </figure>
 
@@ -77,7 +81,7 @@ export async function getStaticProps(): Promise<{ props: Post }> {
   //   console.log(err)
   // }
 
-  const slug = "schedule"
+  const slug = "micro"
 
   const post = await getPostBySlug(slug)
 
@@ -91,6 +95,7 @@ export async function getStaticProps(): Promise<{ props: Post }> {
           url: "",
           width: 0,
           height: 0,
+          blurDataURL: "",
         },
         categories: [],
         description: "",
@@ -100,12 +105,17 @@ export async function getStaticProps(): Promise<{ props: Post }> {
 
   const description = extractText(post.content)
 
+  const eyecatch = post.eyecatch ?? eyecatchLocal
+
+  const { base64 } = await getPlaiceholder(eyecatch.url)
+  eyecatch.blurDataURL = base64
+
   return {
     props: {
       title: post.title,
       publishDate: post.publishDate,
       content: post.content,
-      eyecatch: post.eyecatch,
+      eyecatch,
       categories: post.categories,
       description,
     },

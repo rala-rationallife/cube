@@ -8,6 +8,7 @@ export type Post = {
     url: string
     width: number
     height: number
+    blurDataURL: string
   }
   categories: {
     id: string
@@ -44,6 +45,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
         url: "",
         width: 0,
         height: 0,
+        blurDataURL: "",
       },
       categories: [],
       description: "",

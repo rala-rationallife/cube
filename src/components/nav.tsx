@@ -14,6 +14,9 @@ export function Nav() {
         <li>
           <Link href="/blog">Blog</Link>
         </li>
+        <li>
+          <Link href="/blog/schedule">Schedule</Link>
+        </li>
       </ul>
     </nav>
   )
