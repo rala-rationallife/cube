@@ -1,5 +1,5 @@
 import { createClient } from "microcms-js-sdk"
-import { Category } from "./types"
+import { Category, PostSummary } from "./types"
 
 export type Post = {
   title: string
@@ -28,19 +28,6 @@ export type Post = {
 export type Slug = {
   title: string
   slug: string
-}
-
-type Eyecatch = {
-  url: string
-  width: number
-  height: number
-  blurDataURL: string
-}
-
-type PostSummary = {
-  title: string
-  slug: string
-  eyecatch: Eyecatch
 }
 
 export const client = createClient({
@@ -135,6 +122,27 @@ export async function getAllCategories(
     return categories.contents
   } catch (err) {
     console.log("~~ getAllCategories ~~")
+    console.log(err)
+  }
+}
+
+export async function getAllPostsByCategory(
+  catID: Category["id"],
+  limit = 100,
+): Promise<PostSummary[] | undefined> {
+  try {
+    const posts = await client.get<{ contents: PostSummary[] }>({
+      endpoint: "blogs",
+      queries: {
+        filters: `categories[contains]${catID}`,
+        fields: "title,slug,eyecatch",
+        orders: "-publishDate",
+        limit,
+      },
+    })
+    return posts.contents
+  } catch (err) {
+    console.log("~~ getAllPostsByCategory ~~")
     console.log(err)
   }
 }

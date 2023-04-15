@@ -1,17 +1,21 @@
 import { Container } from "@/components/container"
 import { PostHeader } from "@/components/post-header"
-import { getAllCategories } from "@/lib/api"
-import { Category, CategoryProps } from "@/lib/types"
+import { Posts } from "@/components/posts"
+import { getAllCategories, getAllPostsByCategory } from "@/lib/api"
+import { eyecatchLocal } from "@/lib/constants"
+import { CategoryProps } from "@/lib/types"
 import {
   GetStaticPathsResult,
   GetStaticPropsContext,
   GetStaticPropsResult,
 } from "next"
+import { getPlaiceholder } from "plaiceholder"
 
-export default function Category({ name }: Category) {
+export default function Category({ name, posts }: CategoryProps) {
   return (
     <Container>
       <PostHeader title={name} subTitle="Blog Category" />
+      <Posts posts={posts} />
     </Container>
   )
 }
@@ -50,9 +54,20 @@ export async function getStaticProps(
 
   const { name } = cat
 
+  const posts = (await getAllPostsByCategory(cat.id)) || []
+
+  for (const post of posts) {
+    if (!post.hasOwnProperty("eyecatch")) {
+      post.eyecatch = { ...eyecatchLocal, blurDataURL: "" }
+    }
+    const { base64 } = await getPlaiceholder(post.eyecatch.url)
+    post.eyecatch.blurDataURL = base64
+  }
+
   return {
     props: {
       name,
+      posts,
     },
   }
 }
