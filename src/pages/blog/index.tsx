@@ -21,7 +21,7 @@ type PostSummary = {
   eyecatch: Eyecatch
 }
 
-type BlogProps = {
+export type BlogProps = {
   posts: PostSummary[]
 }
 
