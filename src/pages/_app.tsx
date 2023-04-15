@@ -3,6 +3,7 @@ import "@/styles/globals.scss"
 import type { AppProps } from "next/app"
 import "@fortawesome/fontawesome-svg-core/styles.css"
 import { config } from "@fortawesome/fontawesome-svg-core"
+import "nprogress/nprogress.css"
 import NProgress from "nprogress"
 import { Router } from "next/router"
 

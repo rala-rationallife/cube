@@ -1,4 +1,5 @@
 import { createClient } from "microcms-js-sdk"
+import { Category } from "./types"
 
 export type Post = {
   title: string
@@ -116,6 +117,24 @@ export async function getAllPosts(
     return posts.contents
   } catch (err) {
     console.log("~~ getAllPosts ~~")
+    console.log(err)
+  }
+}
+
+export async function getAllCategories(
+  limit = 100,
+): Promise<Category[] | undefined> {
+  try {
+    const categories = await client.get<{ contents: Category[] }>({
+      endpoint: "categories",
+      queries: {
+        fields: "name,id,slug",
+        limit,
+      },
+    })
+    return categories.contents
+  } catch (err) {
+    console.log("~~ getAllCategories ~~")
     console.log(err)
   }
 }
