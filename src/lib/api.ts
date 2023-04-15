@@ -29,6 +29,19 @@ export type Slug = {
   slug: string
 }
 
+type Eyecatch = {
+  url: string
+  width: number
+  height: number
+  blurDataURL: string
+}
+
+type PostSummary = {
+  title: string
+  slug: string
+  eyecatch: Eyecatch
+}
+
 export const client = createClient({
   serviceDomain: `${process.env.NEXT_PUBLIC_SERVICE_DOMAIN}`,
   apiKey: `${process.env.NEXT_PUBLIC_API_KEY}`,
@@ -85,5 +98,24 @@ export async function getAllSlugs(limit = 100): Promise<Slug[] | undefined> {
     console.log("~~ getAllSlugs ~~")
     console.log(err)
     return undefined
+  }
+}
+
+export async function getAllPosts(
+  limit = 100,
+): Promise<PostSummary[] | undefined> {
+  try {
+    const posts = await client.get<{ contents: PostSummary[] }>({
+      endpoint: "blogs",
+      queries: {
+        fields: "title,slug,eyecatch",
+        orders: "-publishDate",
+        limit,
+      },
+    })
+    return posts.contents
+  } catch (err) {
+    console.log("~~ getAllPosts ~~")
+    console.log(err)
   }
 }
