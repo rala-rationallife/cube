@@ -20,6 +20,13 @@ export type Post = {
     slug: string
   }[]
   description: string
+  prevPost: Slug
+  nextPost: Slug
+}
+
+export type Slug = {
+  title: string
+  slug: string
 }
 
 export const client = createClient({
@@ -49,6 +56,34 @@ export async function getPostBySlug(slug: string): Promise<Post> {
       },
       categories: [],
       description: "",
+      prevPost: {
+        title: "",
+        slug: "",
+      },
+      nextPost: {
+        title: "",
+        slug: "",
+      },
     }
+  }
+}
+
+export async function getAllSlugs(limit = 100): Promise<Slug[] | undefined> {
+  try {
+    const slugs = await client.get<{
+      contents: Slug[]
+    }>({
+      endpoint: "blogs",
+      queries: {
+        fields: "title,slug",
+        orders: "-publishDate",
+        limit,
+      },
+    })
+    return slugs.contents
+  } catch (err) {
+    console.log("~~ getAllSlugs ~~")
+    console.log(err)
+    return undefined
   }
 }
